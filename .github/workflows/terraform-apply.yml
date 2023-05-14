@@ -23,8 +23,8 @@ jobs:
       name: "Terraform Action"
       runs-on: ubuntu-latest
       defaults:
-      run:
-        working-directory: ${{ inputs.stage }}/services/${{ inputs.aws-service }}
+        run:
+          working-directory: ${{ inputs.stage }}/services/${{ inputs.aws-service }}
       steps:
         - name: Runner Checkout
           uses: actions/checkout@v3
