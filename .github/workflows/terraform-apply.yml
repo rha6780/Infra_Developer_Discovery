@@ -1,17 +1,33 @@
 name: terraform-deploy
 
 on:
-  push:
-    branches:
-      - main
-
-env:
-  USER: github-action
-  AWS_REGION: ap-northeast-2
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: 'Stage'
+        required: true
+        default: prod
+        type: choice
+        options:
+          - alpha
+          - beta
+          - prod
+      aws-service:
+        description: 'Terraform Working Directory'
+        required: true
+        default: 'ec2'
+        type: string
 
 jobs:
   terraform:
+      name: "Terraform Action"
       runs-on: ubuntu-latest
+      strategy:
+      matrix:
+        directories: ${{ fromJson(needs.directories.outputs.dirs) }}
+      defaults:
+        run:
+          working-directory: ${{ matrix.directories }}
       steps:
         - name: Runner Checkout
           uses: actions/checkout@v3
@@ -24,14 +40,17 @@ jobs:
             aws-region: ap-northeast-2
 
         - name: Terraform Init
+          id: tf_init
           run: |
             terraform init
 
         - name: Terraform Plan
+          id: tf_plan
           run: |
             terraform plan
         
         - name: Terraform Apply
+          id: tf_apply
           run: |
             terraform apply -auto-approve -input=false
 
