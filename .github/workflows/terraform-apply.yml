@@ -13,7 +13,6 @@ jobs:
   terraform:
       runs-on: ubuntu-latest
       steps:
-      steps:
         - name: Runner Checkout
           uses: actions/checkout@v3
 
