@@ -22,12 +22,14 @@ jobs:
   terraform:
       name: "Terraform Action"
       runs-on: ubuntu-latest
-      defaults:
-        run:
-          working-directory: ${{ inputs.stage }}/${{ inputs.aws-service }}
       steps:
         - name: Runner Checkout
           uses: actions/checkout@v3
+
+        - name: Set Working Directory
+          id: set-dir
+          with:
+            working-directory: ${{ inputs.stage }}/${{ inputs.aws-service }}
 
         - name: Configure AWS credentials
           uses: aws-actions/configure-aws-credentials@v1
@@ -38,16 +40,19 @@ jobs:
 
         - name: Terraform Init
           id: tf_init
+          working-directory: ${{ steps.set-dir.working-directory }}
           run: |
             terraform init
 
         - name: Terraform Plan
           id: tf_plan
+          working-directory: ${{ steps.set-dir.working-directory }}
           run: |
             terraform plan
         
         - name: Terraform Apply
           id: tf_apply
+          working-directory: ${{ steps.set-dir.working-directory }}
           run: |
             terraform apply -auto-approve -input=false
 
