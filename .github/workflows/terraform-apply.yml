@@ -22,6 +22,9 @@ jobs:
   terraform:
       name: "Terraform Action"
       runs-on: ubuntu-latest
+      defaults:
+      run:
+        working-directory: ${{ inputs.stage }}/services/${{ inputs.aws-service }}
       steps:
         - name: Runner Checkout
           uses: actions/checkout@v3
@@ -35,19 +38,19 @@ jobs:
 
         - name: Terraform Init
           id: tf_init
-          working-directory: ${{ inputs.stage }}/${{ inputs.aws-service }}
+          # working-directory: ${{ inputs.stage }}/${{ inputs.aws-service }}
           run: |
             terraform init
 
         - name: Terraform Plan
           id: tf_plan
-          working-directory: ${{ inputs.stage }}/${{ inputs.aws-service }}
+          # working-directory: ${{ inputs.stage }}/${{ inputs.aws-service }}
           run: |
             terraform plan
         
         - name: Terraform Apply
           id: tf_apply
-          working-directory: ${{ inputs.stage }}/${{ inputs.aws-service }}
+          # working-directory: ${{ inputs.stage }}/${{ inputs.aws-service }}
           run: |
             terraform apply -auto-approve -input=false
 
