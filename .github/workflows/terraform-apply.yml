@@ -38,19 +38,16 @@ jobs:
 
         - name: Terraform Init
           id: tf_init
-          # working-directory: ${{ inputs.stage }}/${{ inputs.aws-service }}
           run: |
             terraform init
 
         - name: Terraform Plan
           id: tf_plan
-          # working-directory: ${{ inputs.stage }}/${{ inputs.aws-service }}
           run: |
             terraform plan
         
         - name: Terraform Apply
           id: tf_apply
-          # working-directory: ${{ inputs.stage }}/${{ inputs.aws-service }}
           run: |
             terraform apply -auto-approve -input=false
 
