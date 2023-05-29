@@ -9,6 +9,7 @@
 prod
 └── services
     ├── ec2
+    ├── ecr
     └── iam
 
 ```
