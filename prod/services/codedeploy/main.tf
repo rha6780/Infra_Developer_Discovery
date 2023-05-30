@@ -24,17 +24,20 @@ resource "aws_codedeploy_deployment_group" "developer_discovery_deployment_group
   service_role_arn       = var.codedeploy_role_arn
   deployment_config_name = aws_codedeploy_deployment_config.developer_discovery_deployment_config.id
 
-  ec2_tag_filter {
-    key   = "filterkey"
-    type  = "KEY_AND_VALUE"
-    value = "filtervalue"
+  ec2_tag_set {
+    ec2_tag_filter {
+      key   = "Name"
+      type  = "KEY_AND_VALUE"
+      value = "developer_discovery"
+    }
   }
 
-  trigger_configuration {
-    trigger_events     = ["DeploymentFailure"]
-    trigger_name       = "deploy-trigger"
-    trigger_target_arn = var.ec2_arn
-  }
+# TODO: 실패시 트리거할 기능 작성
+#   trigger_configuration {
+#     trigger_events     = ["DeploymentFailure"]
+#     trigger_name       = "deploy-trigger"
+#     trigger_target_arn = var.ec2_arn
+#   }
 
   auto_rollback_configuration {
     enabled = true
