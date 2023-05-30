@@ -7,9 +7,9 @@ module "iam" {
 }
 
 output "codedeploy_role_arn" {
-  value = module.iam.arn
+  value = module.iam.codedeploy_role_arn
 }
 
 output "ec2_arn" {
-  value = module.ec2.arn
+  value = module.ec2.ec2_arn
 }
