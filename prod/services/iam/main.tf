@@ -7,3 +7,8 @@ resource "aws_iam_role" "codedeploy_role" {
     Stage = "prod"
   }
 }
+
+resource "aws_iam_role_policy_attachment" "codedeploy_role_attachment" {
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSCodeDeployRole"
+  role       = aws_iam_role.codedeploy_role.name
+}

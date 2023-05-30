@@ -8,7 +8,7 @@ remote_state {
 
   config = {
     bucket  = "infra-developer-discovery"
-    key     = "prod/services/${path_relative_to_include()}/terraform.tfstate"
+    key     = "prod/${path_relative_to_include()}/terraform.tfstate"
     region  = "ap-northeast-2"
     profile = "ddprod"
   }
