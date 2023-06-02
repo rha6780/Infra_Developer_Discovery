@@ -19,6 +19,7 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "developer_discovery_api"{
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t3.micro"
+  iam_instance_profile   = var.developer_discover_profile_name
 
   tags = {
     Name  = "developer_discovery"
