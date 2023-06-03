@@ -1,4 +1,13 @@
-#TODO : ec2 리소스 생성 구문 작성 (ami 등)
+resource "tls_private_key" "private_key" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "aws_key_pair" "generated_key" {
+  key_name   = "developer"
+  public_key = tls_private_key.private_key.public_key_openssh
+}
+
 data "aws_ami" "ubuntu" {
   most_recent = true
 
@@ -19,6 +28,7 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "developer_discovery_api"{
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t3.micro"
+  key_name      = aws_key_pair.generated_key.key_name
   iam_instance_profile   = var.developer_discover_profile_name
 
   tags = {
