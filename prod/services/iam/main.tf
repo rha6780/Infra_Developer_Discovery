@@ -19,6 +19,18 @@ resource "aws_iam_role_policy_attachment" "codedeploy_full_access_attachment" {
   role       = aws_iam_role.codedeploy_role.name
 }
 
+# ECR policy
+resource "aws_iam_policy" "ecr_policy" {
+  name        = "test-policy"
+  description = "A test policy"
+  policy      = file("policies/ecr-policy.json")
+}
+
+resource "aws_iam_role_policy_attachment" "ecr_policy_attachment" {
+  policy_arn = aws_iam_policy.ecr_policy.arn
+  role       = aws_iam_role.codedeploy_role.name
+}
+
 
 # EC2 iam
 resource "aws_iam_role" "developer_discover_role" {

@@ -1,0 +1,28 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "GetAuthorizationToken",
+            "Effect": "Allow",
+            "Action": [
+                "ecr-public:GetAuthorizationToken"
+            ],
+            "Resource": "*"
+        },
+        {
+            "Sid": "ManageRepositoryContents",
+            "Effect": "Allow",
+            "Action": [
+                "ecr-public:BatchCheckLayerAvailability",
+                "ecr-public:GetRepositoryPolicy",
+                "ecr-public:DescribeRepositories",
+                "ecr-public:DescribeImages",
+                "ecr-public:InitiateLayerUpload",
+                "ecr-public:UploadLayerPart",
+                "ecr-public:CompleteLayerUpload",
+                "ecr-public:PutImage"
+            ],
+            "Resource": "arn:aws:ecr-public::123456789012:repository/my-repo"
+        }
+    ]
+}
