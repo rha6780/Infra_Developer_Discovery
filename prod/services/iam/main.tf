@@ -21,7 +21,7 @@ resource "aws_iam_role_policy_attachment" "codedeploy_full_access_attachment" {
 
 # ECR policy
 resource "aws_iam_policy" "ecr_policy" {
-  name        = "test-policy"
+  name        = "ecr-public-policy"
   description = "A test policy"
   policy      = file("policies/ecr-policy.json")
 }
@@ -65,4 +65,9 @@ data "aws_iam_policy_document" "assume_role" {
 
     actions = ["sts:AssumeRole"]
   }
+}
+
+resource "aws_iam_role_policy_attachment" "ecr_to_ec2_policy_attachment" {
+  policy_arn = aws_iam_policy.ecr_policy.arn
+  role       = aws_iam_role.developer_discover_role.name
 }
