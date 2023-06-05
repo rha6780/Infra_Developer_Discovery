@@ -1,5 +1,5 @@
 resource "aws_ecr_repository" "developer_discovery" {
-  name                 = "developer_discovery"
+  name                 = "developer_discovery_repository"
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
