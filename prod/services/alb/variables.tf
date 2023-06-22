@@ -1,4 +1,4 @@
-variable "developer_discover_profile_name" {
+variable "ec2_id" {
   type = string
 }
 

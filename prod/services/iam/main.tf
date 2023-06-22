@@ -80,7 +80,7 @@ resource "aws_iam_role" "lambda_role" {
 
 resource "aws_iam_policy" "lambda_invoke_policy" {
   description = "developer discovery invoke policy"
-  name        = "iris-lambda-invoke-policy"
+  name        = "lambda-invoke-policy"
   policy      = file("policies/lambda-invoke.json")
 }
 

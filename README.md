@@ -11,10 +11,13 @@
 ```
 prod
 └── services
-    ├── codedeploy
+    ├── alb
     ├── ec2
+    ├── rds
     ├── ecr
     ├── iam
-    └── rds
+    ├── vpc
+    ├── codedeploy
+    └── securitygroup
 
 ```

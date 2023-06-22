@@ -22,7 +22,21 @@ resource "aws_security_group" "developer-discovery-alb-sg" {
     from_port   = 8080
     to_port     = 8080
     protocol    = "tcp"
-    cidr_blocks = ["10.121.0.0/16"]
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    description = "allow 22 from vpn"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    description = "allow 5432 from vpn"
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
   egress {
     from_port        = 0

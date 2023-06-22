@@ -30,6 +30,21 @@ resource "aws_instance" "developer_discovery_api"{
   instance_type = "t3.micro"
   key_name      = aws_key_pair.generated_key.key_name
   iam_instance_profile   = var.developer_discover_profile_name
+  subnet_id = var.public_subnet
+  depends_on = [var.vpc_gateway]
+  # associate_with_private_ip = "10.0.2.0"
+  vpc_security_group_ids = [var.vpc_security_group_id]
+
+  tags = {
+    Name  = "developer_discovery"
+    Stage = "prod"
+  }
+}
+
+resource "aws_eip" "developer_discovery_lb" {
+  instance = aws_instance.developer_discovery_api.id
+  domain   = "vpc"
+  depends_on                = [var.vpc_gateway]
 
   tags = {
     Name  = "developer_discovery"
