@@ -99,21 +99,42 @@ resource "aws_route53_zone" "devleoper_discovery_zone" {
   name = "developerdiscovery.com."
 }
 
-resource "aws_route53_record" "product_dns" {
-  zone_id        = aws_route53_zone.devleoper_discovery_zone.id
-  name           = ""
-  type           = "A"
-  set_identifier = "developer_discovery"
-
-  latency_routing_policy {
-    region = "ap-northeast-2"
+# host zone 부터
+resource "aws_acm_certificate" "developer_discovery_com"   { 
+  domain_name   = "developerdiscovery.com"
+  validation_method = "DNS"
+  
+  lifecycle {
+    create_before_destroy = true
   }
 
-  alias {
-    name                   = "${aws_alb.devleoper-discovery-alb.dns_name}"
-    zone_id                = "${aws_alb.devleoper-discovery-alb.zone_id}"
-    evaluate_target_health = true
+  tags = { 
+    Name  = "developer_discovery"
+    Stage = "prod"
   }
+}
+
+resource "aws_route53_record" "developer_discovery_record" {
+  for_each = {
+    for dvo in aws_acm_certificate.developer_discovery_com.domain_validation_options : dvo.domain_name => {
+      name   = dvo.resource_record_name
+      record = dvo.resource_record_value
+      type   = dvo.resource_record_type
+    }
+  }
+
+  allow_overwrite = true
+  name            = each.value.name
+  records         = [each.value.record]
+  ttl             = 60
+  type            = each.value.type
+  zone_id         = aws_route53_zone.devleoper_discovery_zone.id
+}
+
+# certification 연결을 위해 validation 사용
+resource "aws_acm_certificate_validation" "developer_discovery_certi_validation" {
+  certificate_arn         = aws_acm_certificate.developer_discovery_com.arn
+  validation_record_fqdns = [for record in aws_route53_record.developer_discovery_record : record.fqdn]
 }
 
 resource "aws_alb_listener" "http" {
@@ -127,18 +148,12 @@ resource "aws_alb_listener" "http" {
   }
 }
 
-# host zone 부터
-data "aws_acm_certificate" "developer_discovery_domain_certi"   { 
-  domain   = "developerdiscovery.com"
-  statuses = ["ISSUED"]
-}
-
 resource "aws_alb_listener" "https" {
   load_balancer_arn = "${aws_alb.devleoper-discovery-alb.arn}"
   port              = "443"
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = "${data.aws_acm_certificate.developer_discovery_domain_certi.arn}"
+  certificate_arn   = "${aws_acm_certificate_validation.developer_discovery_certi_validation.certificate_arn}"
 
   default_action {
     target_group_arn = "${aws_alb_target_group.developer-discovery-api.arn}"
