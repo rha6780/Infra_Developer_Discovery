@@ -1,6 +1,6 @@
 # Infra_Developer_Discovery
 
-<img width="760" alt="Infra_Developer_Discovery_architecture" src="https://github.com/rha6780/Infra_Developer_Discovery/assets/47859845/f49f86a1-f243-4a2a-b8ae-eef58c5d2b93">
+<img width="760" alt="infra_structure" src="https://github.com/rha6780/Infra_Developer_Discovery/assets/47859845/7cc5eef7-ff4c-48c3-91e8-1b19b734f7d9">
 
 
 - Developer Discovery 관련 인프라를 관리합니다.
