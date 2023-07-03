@@ -11,8 +11,6 @@ dependency "securitygroup" {
 }
 
 inputs = {
-  vpc_subnet_id = dependency.vpc.outputs.vpc_subnet_first_id
-  vpc_security_group_id = dependency.securitygroup.outputs.security_group_id
-  private_subnet = dependency.vpc.outputs.private_subnet
-  public_subnet = dependency.vpc.outputs.public_subnet
+  db_security_group_id = dependency.securitygroup.outputs.db_security_group_id
+  db_subnet_group_name = dependency.vpc.outputs.db_subnet_group_name
 }

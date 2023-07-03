@@ -2,7 +2,7 @@ resource "aws_alb" "devleoper-discovery-alb" {
   name            = "devleoper-discovery-alb"
   internal        = false
   security_groups = [var.vpc_security_group_id]
-  subnets         = [var.public_subnet, var.private_subnet]
+  subnets         = [var.public_subnet-1, var.public_subnet-2]
 
   tags = {
     Name  = "developer_discovery"
@@ -17,7 +17,7 @@ resource "aws_alb" "devleoper-discovery-alb" {
 
 
 resource "aws_alb_target_group" "developer-discovery-api" {
-  name     = "api-target-group"
+  name     = "developer-discovery-api-group"
   port     = 80
   protocol = "HTTP"
   vpc_id   = var.vpc_id

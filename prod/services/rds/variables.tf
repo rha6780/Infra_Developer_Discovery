@@ -3,15 +3,10 @@ variable "rds_password" {
   sensitive   = true
 }
 
-variable "vpc_security_group_id" {
+variable "db_security_group_id" {
   type        = string
 }
 
-variable "public_subnet" {
+variable "db_subnet_group_name" {
   type        = string
 }
-
-variable "private_subnet" {
-  type        = string
-}
-
