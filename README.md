@@ -1,7 +1,6 @@
 # Infra_Developer_Discovery
 
-<img width="760" alt="infra_structure" src="https://github.com/rha6780/Infra_Developer_Discovery/assets/47859845/644c5cc3-dfb1-4e39-97ff-f25c0225d002">
-
+<img width="760" alt="infra_structure" src="https://github.com/rha6780/Infra_Developer_Discovery/assets/47859845/a6884a28-c07a-4e2b-a154-310eff1f6eea">
 
 - Developer Discovery 관련 인프라를 관리합니다.
 - Terraform 을 이용합니다.
