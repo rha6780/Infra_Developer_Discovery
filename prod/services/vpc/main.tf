@@ -8,6 +8,39 @@ resource "aws_vpc" "developer_discovery" {
   }
 }
 
+# endpoint
+# developer-discovery-images s3에 관한 policy 추가 (이름 변경시 주의할 것)
+resource "aws_vpc_endpoint" "s3" {
+  vpc_id       = aws_vpc.developer_discovery.id
+  service_name = "com.amazonaws.ap-northeast-2.s3"
+  route_table_ids =[aws_route_table.public_route_table.id, aws_route_table.private_route_table.id]
+  policy = <<POLICY
+  {
+	"Version": "2008-10-17",
+	"Statement": [
+		{
+			"Sid": "AccessToS3Bucket",
+			"Effect": "Allow",
+			"Principal": "*",
+			"Action": [
+				"s3:GetObject"
+			],
+			"Resource": [
+				"arn:aws:s3:::developer-discovery-images",
+				"arn:aws:s3:::developer-discovery-images/*"
+			]
+		}
+	]
+}
+POLICY
+
+  tags = {
+    Name  = "developer_discovery-vpc"
+    Stage = "prod"
+  }
+}
+
+# subnets
 resource "aws_subnet" "public-1" {
   vpc_id     = aws_vpc.developer_discovery.id
   cidr_block = "10.0.1.0/24"

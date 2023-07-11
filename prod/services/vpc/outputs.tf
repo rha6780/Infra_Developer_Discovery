@@ -10,6 +10,10 @@ output "vpc_id" {
   value = aws_vpc.developer_discovery.id
 }
 
+output "s3_vpce_id" {
+  value = aws_vpc_endpoint.s3.id
+}
+
 output "public_subnet-1" {
   value = aws_subnet.public-1.id
 }

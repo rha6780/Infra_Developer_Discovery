@@ -104,4 +104,34 @@ resource "aws_iam_role_policy_attachment" "lambda_vpc_access" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
 }
 
+# S3
+resource "aws_iam_policy" "s3_bucket_policy" {
+  name        = "developer-discovery-images-s3-policy"
+  path        = "/"
+  description = "Allow "
 
+  policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Sid" : "VisualEditor0",
+        "Effect" : "Allow",
+        "Action" : [
+          "s3:PutObject",
+          "s3:GetObject",
+          "s3:ListBucket",
+          "s3:DeleteObject"
+        ],
+        "Resource" : [
+          "arn:aws:s3:::*/*",
+          "arn:aws:s3:::developer-discovery-images"
+        ]
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "ec2_s3bucket_policy" {
+  role       = aws_iam_role.developer_discover_role.name
+  policy_arn = aws_iam_policy.s3_bucket_policy.arn
+}
