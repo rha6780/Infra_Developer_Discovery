@@ -27,7 +27,7 @@ data "aws_ami" "ubuntu" {
 
 resource "aws_instance" "developer_discovery_api"{
   ami           = data.aws_ami.ubuntu.id
-  instance_type = "t3.micro"
+  instance_type = "t3a.small"
   key_name      = aws_key_pair.generated_key.key_name
   iam_instance_profile   = var.developer_discover_profile_name
   subnet_id = var.public_subnet
