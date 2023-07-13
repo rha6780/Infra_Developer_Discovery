@@ -22,12 +22,11 @@ resource "aws_vpc_endpoint" "s3" {
 			"Sid": "AccessToS3Bucket",
 			"Effect": "Allow",
 			"Principal": "*",
-			"Action": [
-				"s3:GetObject"
-			],
+			"Action": "s3:*",
 			"Resource": [
 				"arn:aws:s3:::developer-discovery-images",
-				"arn:aws:s3:::developer-discovery-images/*"
+				"arn:aws:s3:::developer-discovery-images/*",
+        "arn:aws:s3:::prod-ap-northeast-2-starport-layer-bucket/*"
 			]
 		}
 	]
